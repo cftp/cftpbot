@@ -10,6 +10,8 @@
 # Commands:
 #   Morning makes hubot say morning to you back
 #   Hello or Good Day make hubot say hello to you back
+
+module.exports = (robot) ->
 send_offs = [
   "Good night, baby. %s",
   "Night hot stuff. %s",
@@ -33,7 +35,6 @@ send_offs = [
   "Avada Kedavra, %s"
 ]
 
-module.exports = (robot) ->
 	robot.hear /(hello|good( [d'])?ay(e)?)/i, (msg) ->
 		hello = msg.random hellos
 		msg.send hello.replace "% %s", msg.message.user.name
