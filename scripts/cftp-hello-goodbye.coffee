@@ -9,7 +9,7 @@
 #
 # Commands:
 #   Morning makes hubot say morning to you back
-#   Hello or Good Day make hubot say hello to you back
+#   hubot seen [name] makes hubot tell you when they were last seen
 
 module.exports = (robot) ->
 	send_offs = [
@@ -55,20 +55,29 @@ module.exports = (robot) ->
 		user.last = user.last || {}
 		user.last.words = msg.message.text
 		user.last.seen = new Date()
-		# msg.send "I will remember \"" + user.last.words + "\" said at " + user.last.seen
+
+	# Track the ins
+	robot.enter (msg) ->
+		user = robot.brain.userForId( msg.message.user.id )
+		user.last = user.last || {}
+		user.last.left = new Date()
+		user.in = true
+
+	# Track the outs
+	robot.leave (msg) ->
+		user = robot.brain.userForId( msg.message.user.id )
+		user.in = false
 
 	# Listen for the "seen [user]" command
 	robot.respond /seen \@?([^\?]+)\??/i, (msg) ->
 		name = msg.match[1].trim()
-		if ! name
-			msg.send "I don't know who you mean"
-			return
-		msg.send "Looking for " + name
 		users = robot.brain.usersForFuzzyName(name)
 		if users.length is 1
 			user = users[0]
 			if user.id == msg.message.user.id
 				msg.send "You are #{name}, silly."
+			else if user.in
+				msg.send "I think #{name} is here."
 			else if user.last
 				msg.send "I last saw #{name} on " + user.last.seen + ", they last said \"" + user.last.words + "\""
 			else
