@@ -35,9 +35,6 @@ send_offs = [
   "Avada Kedavra, %s"
 ]
 
-	robot.hear /(hello|good( [d'])?ay(e)?)/i, (msg) ->
-		hello = msg.random hellos
-		msg.send hello.replace "% %s", msg.message.user.name
 
 	robot.hear /(^m(a|o)rnin(g)?)/i, (msg) ->
 		msg.send "Morning, %s".replace "% %s", msg.message.user.name
