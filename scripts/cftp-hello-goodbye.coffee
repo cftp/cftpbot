@@ -36,8 +36,10 @@ send_offs = [
 ]
 
 
-	robot.hear /(^m(a|o)rnin(g)?)/i, (msg) ->
-		msg.send "Morning, %s".replace "% %s", msg.message.user.name
+	# Listen for someone saying "Morning", as per
+	# the proper CFTP protocol.
+	robot.hear /(^morning)/i, (msg) ->
+		msg.send "Morning, %s".replace "%s", msg.message.user.name
 
 	robot.hear /(good night|bye|nighty night)/i, (msg) ->
 		send_off = msg.random send_offs
