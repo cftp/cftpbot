@@ -57,6 +57,9 @@ module.exports = (robot) ->
 		user.last.seen = new Date()
 
 	# Track the ins
+	# @FIXME: Perhaps we can use:
+	# 	for own key, user of robot.brain.data.users
+	# See storage.coffee
 	robot.enter (msg) ->
 		user = robot.brain.userForId( msg.message.user.id )
 		user.last = user.last || {}
