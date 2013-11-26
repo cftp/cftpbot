@@ -12,6 +12,7 @@
 #   hubot seen [name] makes hubot tell you when they were last seen
 
 module.exports = (robot) ->
+
 	send_offs = [
 	  "Good night, baby. %s",
 	  "Night hot stuff. %s",
@@ -35,6 +36,8 @@ module.exports = (robot) ->
 	  "Avada Kedavra, %s"
 	]
 
+	DAY = 1000 * 60 * 60  * 24
+
 	getAmbiguousUserText = (users) ->
 		"Be more specific, I know #{users.length} people named like that: #{(user.name for user in users).join(", ")}"
 
@@ -57,9 +60,6 @@ module.exports = (robot) ->
 		user.last.seen = new Date()
 
 	# Track the ins
-	# @FIXME: Perhaps we can use:
-	# 	for own key, user of robot.brain.data.users
-	# See storage.coffee
 	robot.enter (msg) ->
 		user = robot.brain.userForId( msg.message.user.id )
 		user.last = user.last || {}
@@ -78,15 +78,26 @@ module.exports = (robot) ->
 		if users.length is 1
 			user = users[0]
 			if user.id == msg.message.user.id
-				msg.send "You are #{name}, silly."
+				msg.send "You are #{user.name}, silly."
 			else if user.in
-				msg.send "I think #{name} is here."
+				msg.send "I think #{user.name} is here."
 			else if user.last
-				msg.send "I last saw #{name} on " + user.last.seen + ", they last said \"" + user.last.words + "\""
+				last = new Date( user.last.seen )
+				now = new Date()
+				days_passed = Math.round((last.getTime() - now.getTime()) / DAY)
+				hours = last.getHours()
+				minutes = last.getMinutes()
+				if ! days_passed
+					last_seen = "at " + hours + ":" + minutes
+				else if 1 == days_passed
+					last_seen = "a day ago, at " + hours + ":" + minutes
+				else
+					last_seen = days_passed + " days ago, at " + hours + ":" + minutes
+				msg.send "I last saw #{user.name} " + last_seen + ", when they said \"" + user.last.words + "\""
 			else
-				msg.send "I have no idea when #{name} was last seen"
+				msg.send "I have no idea when #{user.name} was last seen"
 		else if users.length > 1
 			msg.send getAmbiguousUserText users
 		else
-			msg.send "I'm sorry, I don't know anyone called %s.".replace "%s", name
+			msg.send "I'm sorry, I don't know anyone called #{name}."
 
