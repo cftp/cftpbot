@@ -36,25 +36,62 @@ module.exports = (robot) ->
 	  "Avada Kedavra, %s"
 	]
 
-	DAY = 1000 * 60 * 60  * 24
+	greeting_respects = [
+		"always likes to see someone who's been brought up properly",
+		"glances up, looks pleased",
+		"likes it when someone follows protocol"
+	]
+
+	greeting_grumbles = [
+		"mutters about manners costing nothing",
+		"thinks people these days need to slow down and say good morning",
+		"wishes people would say good morning, like they're expected to",
+		"thinks manners cost nothing",
+		"remembers the good old days, when people followed the proper protocols",
+		"grumbles about people not greeting the channel properly"
+	]
+
+	MINUTE        = 1000 * 60
+	HOUR          = MINUTE * 60
+	DAY           = HOUR * 24
+	NOW           = new Date()
+	NEW_DAY       = new Date()
+	# New days start at 05:00
+	NEW_DAY.setHours(5,0,0,0)
 
 	getAmbiguousUserText = (users) ->
 		"Be more specific, I know #{users.length} people named like that: #{(user.name for user in users).join(", ")}"
-
-	# Listen for someone saying "Morning", as per
-	# the proper CFTP protocol.
-	robot.hear /(^morning)/i, (msg) ->
-		msg.send "Morning, %s".replace "%s", msg.message.user.name
 
 	# Listen for someone saying "good night" (or similar)
 	robot.hear /(good night|bye|nighty night)/i, (msg) ->
 		send_off = msg.random send_offs
 		msg.send send_off.replace "%s", msg.message.user.name
   
-	# Log whenever someone says something and
+	# Log whenever someone says something, anything, and
 	# what they say.
 	robot.hear /^(.*)$/i, (msg) ->
 		user = robot.brain.userForId( msg.message.user.id )
+		# Work out if an initial message of "Morning" is expected,
+		# as per proper CFTP channel protocol
+		morning_due = false
+		# Unknown users are expected to say "Morning"
+		if ! user.last
+			morning_due = true
+		else
+			# Users who've not spoken since NEW_DAY are expected to say "Morning"
+			last_seen = new Date( user.last.seen )
+			if NEW_DAY.getTime() > last_seen.getTime()
+				morning_due = true
+		# Now check if they said "Morning", as per protocol
+		if morning_due && msg.message.text.match( /(^morning)/i )
+			# YES. Good on them. Sometimes we will express our pleasure
+			if Math.random() > 0.9
+				msg.emote msg.random greeting_respects
+		else if morning_due
+			# NO. Frowny face. Sometimes we will express our displeasure at the lack of protocol
+			if Math.random() > 0.3
+				msg.emote msg.random greeting_grumbles
+		# Now store the last time we heard from the person
 		user.last = user.last || {}
 		user.last.words = msg.message.text
 		user.last.seen = new Date()
@@ -63,13 +100,14 @@ module.exports = (robot) ->
 	robot.enter (msg) ->
 		user = robot.brain.userForId( msg.message.user.id )
 		user.last = user.last || {}
-		user.last.left = new Date()
 		user.in = true
 
 	# Track the outs
 	robot.leave (msg) ->
 		user = robot.brain.userForId( msg.message.user.id )
+		user.last.left = new Date()
 		user.in = false
+		msg.send "#{user.name} just left at #{user.last.left}"
 
 	# Listen for the "seen [user]" command
 	robot.respond /seen \@?([^\?]+)\??/i, (msg) ->
