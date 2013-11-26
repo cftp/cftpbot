@@ -7,6 +7,9 @@
 	"doer_of_deeds.coffee", 
 	"encourage.coffee", 
 	"redis-brain.coffee", 
-	"shipit.coffee", 
-	"weather.coffee"
+	"shipit.coffee",
+	"urban.coffee",
+	"weather.coffee",
+	"whos-turn.coffee",
+	"wordnik.coffee"
 ]

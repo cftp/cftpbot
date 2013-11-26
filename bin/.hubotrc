@@ -9,8 +9,7 @@ export HUBOT_AUTH_ADMIN="@simonw"
 export HUBOT_WEATHER_CELSIUS=1
 export HUBOT_FORECAST_API_KEY="8beaa617c09584ac71c4f4f70c5fd09a"
 
-export HUBOT_GITHUB_TOKEN=c3b373a19d24a0aadd33ac06b3959ffd1e982ed3
-export HUBOT_GITHUB_USER=cftpdeploy
+export WORDNIK_API_KEY="718462de1c4f347b9b20f0fbdec0bf7b1e03218ffaefdcb5c"
 
 #---------------- END HUBOT CONFIG --------------------------------
 
