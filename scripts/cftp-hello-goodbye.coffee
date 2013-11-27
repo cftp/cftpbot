@@ -63,7 +63,7 @@ module.exports = (robot) ->
 		"Be more specific, I know #{users.length} people named like that: #{(user.name for user in users).join(", ")}"
 
 	# Listen for someone saying "good night" (or similar)
-	robot.hear /(good night|bye|nighty night)/i, (msg) ->
+	robot.hear /(good night|bye|nighty night|night\!)/i, (msg) ->
 		send_off = msg.random send_offs
 		msg.send send_off.replace "%s", msg.message.user.name
   
