@@ -8,6 +8,7 @@
 	"encourage.coffee", 
 	"redis-brain.coffee", 
 	"shipit.coffee",
+	"tell.coffee",
 	"urban.coffee",
 	"weather.coffee",
 	"whos-turn.coffee",
