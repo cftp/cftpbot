@@ -7,7 +7,6 @@
 	"doer_of_deeds.coffee", 
 	"encourage.coffee", 
 	"redis-brain.coffee", 
-	"satis.coffee",
 	"shipit.coffee",
 	"tell.coffee",
 	"urban.coffee",

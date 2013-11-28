@@ -4,8 +4,9 @@
 # Commands:
 #   hubot satis - Run the stuff
 
+
 module.exports = (robot) ->
-  robot.respond /satis$/i, (msg) ->
+  robot.respond /satis/i, (msg) ->
     @exec = require('child_process').exec
     msg.send "starting satis rebuild"
     command = ". /home/tomjn/packages/update.sh"
