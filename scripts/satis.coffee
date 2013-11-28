@@ -9,7 +9,7 @@ module.exports = (robot) ->
   robot.respond /satis/i, (msg) ->
     @exec = require('child_process').exec
     msg.send "starting satis rebuild"
-    command = ". /home/tomjn/packages/update.sh"
+    command = "sudo tomjn . /home/tomjn/packages/update.sh"
 
     @exec command, (error, stdout, stderr) ->
       msg.send error
