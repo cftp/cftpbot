@@ -15,3 +15,4 @@ module.exports = (robot) ->
       msg.send error
       msg.send stdout
     msg.send "…higher plane achieved. I feel damned good."
+    msg.emote "will BRB"
