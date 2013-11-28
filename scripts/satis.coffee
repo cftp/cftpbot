@@ -14,4 +14,5 @@ module.exports = (robot) ->
     @exec command, (error, stdout, stderr) ->
       msg.send error
       msg.send stdout
+      msg.send stderr
       msg.send "process finished"
