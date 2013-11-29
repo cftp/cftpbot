@@ -12,21 +12,25 @@ module.exports = (robot) ->
     @exec = require('child_process').exec
 
     msg.send "Starting Satis"
-    command = "(cd /home/tomjn/packages/; git pull origin master; sh ./update.sh)"
+    command = "(" +
+      "cd /home/tomjn/packages/;" +
+      "git pull origin master;" +
+      "sh ./update.sh" +
+      ")"
     
     try
       @exec command, (error, stdout, stderr) ->
-        if ? error
+        if error?
           err = escape error
-          msg.send err if ?err
+          msg.send err
         
-        if ? stdout
+        if stdout?
           out = escape stdout
-          msg.send out if ?out
+          msg.send out
 
-        if ? stde
+        if stderr?
           stde = escape stderr
-          msg.send stde if ?stde
+          msg.send stde
 
         msg.send "Satis finished"
     catch e

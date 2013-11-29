@@ -21,17 +21,18 @@ module.exports = (robot) ->
 
     try
       @exec command, (error, stdout, stderr) ->
-        if ? error
+        if error?
           err = escape error
-          msg.send err if ?err
+          msg.send err
         
-        if ? stdout
+        if stdout?
           out = escape stdout
-          msg.send out if ?out
+          msg.send out
 
-        if ? stde
+        if stderr?
           stde = escape stderr
-          msg.send stde if ?stde
+          msg.send stde
+        
         msg.emote "will BRB"
     catch e
       msg.emote "failed to ascend, wings burnt, hurtling to the ground, deploying safety nets, crash report:"
