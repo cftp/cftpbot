@@ -7,6 +7,7 @@
 module.exports = (robot) ->
   robot.respond /satis/i, (msg) ->
     @exec = require('child_process').exec
+
     msg.send "Starting Satis"
     command = "(cd /home/tomjn/packages/; git pull origin master; sh ./update.sh)"
 
