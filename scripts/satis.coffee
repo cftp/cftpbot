@@ -5,7 +5,7 @@
 #   hubot satis - Rebuild packages.codeforthepeople.com
 
 module.exports = (robot) ->
-  escape = (s) -> (''+s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+  escape = (s) ->(''+s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
         .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
         .replace(/'/g, '&#x27;').replace(/\//g,'&#x2F;')
   robot.respond /satis/i, (msg) ->
@@ -13,16 +13,21 @@ module.exports = (robot) ->
 
     msg.send "Starting Satis"
     command = "(cd /home/tomjn/packages/; git pull origin master; sh ./update.sh)"
-
     
     try
       @exec command, (error, stdout, stderr) ->
-        err = escape error
-        out = escape stdout
-        stde = escape stderr
-        msg.send err
-        msg.send out
-        msg.send stde
+        if ? error
+          err = escape error
+          msg.send err if ?err
+        
+        if ? stdout
+          out = escape stdout
+          msg.send out if ?out
+
+        if ? stde
+          stde = escape stderr
+          msg.send stde if ?stde
+
         msg.send "Satis finished"
     catch e
       ex = escape e
