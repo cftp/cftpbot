@@ -5,14 +5,9 @@
 #   hubot satis - Rebuild packages.codeforthepeople.com
 
 module.exports = (robot) ->
-  escape = (text) ->
-    replacements =
-      [/&/g, '&amp;']
-	    [/</g, '&lt;']
-	    [/"/g, '&quot;']
-	    [/'/g, '&#039;']
-	    for r in replacements
-	      text.replace r[0], r[1]
+  escape = (s) -> (''+s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;').replace(/\//g,'&#x2F;')
   robot.respond /satis/i, (msg) ->
     @exec = require('child_process').exec
 
@@ -30,6 +25,7 @@ module.exports = (robot) ->
         msg.send stde
         msg.send "Satis finished"
     catch e
+      ex = escape e
       msg.send "I tried so hard, but the satis script wouldn't listen =("
-      msg.send e
+      msg.send ex
       msg.emote "pulls itself back together"
