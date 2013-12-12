@@ -14,8 +14,7 @@ module.exports = (robot) ->
     msg.send "Starting Satis"
     command = "(" +
       "cd /home/tomjn/packages/;" +
-      "git pull origin master;" +
-      "./update-cftpbot.sh" +
+      "./update-cftpbot.sh;" +
       ")"
     
     try
