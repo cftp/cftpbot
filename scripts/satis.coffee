@@ -21,15 +21,15 @@ module.exports = (robot) ->
     try
       @exec command, (error, stdout, stderr) ->
         if error?
-          err = escape error
+          # err = escape error
           msg.send err
         
         if stdout?
-          out = escape stdout
+          # out = escape stdout
           msg.send out
 
         if stderr?
-          stde = escape stderr
+          # stde = escape stderr
           msg.send stde
 
         msg.send "Satis finished"
