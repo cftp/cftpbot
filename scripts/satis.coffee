@@ -15,7 +15,7 @@ module.exports = (robot) ->
     command = "(" +
       "cd /home/tomjn/packages/;" +
       "git pull origin master;" +
-      "sh ./update.sh" +
+      "./update.sh" +
       ")"
     
     try
