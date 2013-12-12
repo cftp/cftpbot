@@ -34,7 +34,7 @@ module.exports = (robot) ->
 
         msg.send "Satis finished"
     catch e
-      ex = escape e
+      # e = escape e
       msg.send "I tried so hard, but the satis script wouldn't listen =("
-      msg.send ex
+      msg.send e
       msg.emote "pulls itself back together"
