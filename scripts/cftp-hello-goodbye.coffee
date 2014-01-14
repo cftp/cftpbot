@@ -82,15 +82,15 @@ module.exports = (robot) ->
 			last_seen = new Date( user.last.seen )
 			if NEW_DAY.getTime() > last_seen.getTime()
 				morning_due = true
-		# Now check if they said "Morning", as per protocol
-		if morning_due && msg.message.text.match( /(^morning)/i )
-			# YES. Good on them. Sometimes we will express our pleasure
-			if Math.random() > 0.9
-				msg.emote msg.random greeting_respects
-		else if morning_due
-			# NO. Frowny face. Sometimes we will express our displeasure at the lack of protocol
-			if Math.random() > 0.3
-				msg.emote msg.random greeting_grumbles
+		# # Now check if they said "Morning", as per protocol
+		# if morning_due && msg.message.text.match( /(^morning)/i )
+		# 	# YES. Good on them. Sometimes we will express our pleasure
+		# 	if Math.random() > 0.9
+		# 		msg.emote msg.random greeting_respects
+		# else if morning_due
+		# 	# NO. Frowny face. Sometimes we will express our displeasure at the lack of protocol
+		# 	if Math.random() > 0.3
+		# 		msg.emote msg.random greeting_grumbles
 		# Now store the last time we heard from the person
 		user.last = user.last || {}
 		user.last.words = msg.message.text
