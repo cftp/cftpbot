@@ -25,7 +25,7 @@ module.exports = (robot) ->
           stde = escape stderr
           msg.send stde
 
-        msg.send "A rebuild should occur within 2 minutes"
+        msg.send "A rebuild should occur within 2 minutes, and every 30 minutes. Check http://packages.codeforthepeople.com/ for status"
     catch e
       e = escape e
       msg.send "I tried so hard, but the satis script wouldn't listen =("
