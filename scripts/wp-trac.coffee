@@ -26,7 +26,6 @@ module.exports = (robot) ->
 				if err
 					callback err, body
 					return
-				msg.send "GOT ticket "
 				jsdom.env body, [jquery], (errors, window) ->
 					# use jquery to run selector and return the elements
 					results = (window.$(selector).text().trim() for selector in selectors)
@@ -48,7 +47,7 @@ module.exports = (robot) ->
 					trac_milestone = response[4]
 					if !trac_owner
 						trac_owner = "(no owner)"
-					msg.send "WP Trac #{ticket_url} #{trac_milestone}, #{trac_reporter}=>#{trac_owner}, #{trac_status}, #{trac_title} "
+					msg.send "WP Trac: #{ticket_url} #{trac_milestone}, #{trac_reporter}=>#{trac_owner}, #{trac_status}, #{trac_title} "
 
 
   	# listen for ticket links
@@ -56,5 +55,4 @@ module.exports = (robot) ->
 		# fetch ticket information using scraping or jsonrpc
 
 		ticket_number = msg.match[1]
-		msg.send "Processing ticket #" + ticket_number
 		ticketScrape msg, ticket_number
