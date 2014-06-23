@@ -47,7 +47,7 @@ module.exports = (robot) ->
 					trac_milestone = response[4]
 					if !trac_owner
 						trac_owner = "(no owner)"
-					msg.send "WP Trac: #{ticket_url} #{trac_milestone}, #{trac_reporter}=>#{trac_owner}, #{trac_status}, #{trac_title} "
+					msg.reply " WP Trac \##{ticket_number}, #{trac_milestone}, #{trac_reporter}=>#{trac_owner}, #{trac_status}, #{trac_title} \n#{ticket_url}"
 
 
   	# listen for ticket links
